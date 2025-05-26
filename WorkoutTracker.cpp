@@ -137,3 +137,42 @@ void WorkoutTracker::loadFromFile(const std::string& filename) {
 
     std::cout << "✅ Successfully loaded from file: " << filename << "\n";
 }
+#include <map>
+
+void WorkoutTracker::printStatistics() const {
+    std::map<std::string, float> maxWeightPerExercise;
+
+
+    std::cout << "\n=== Статистика по тренировкам ===\n";
+
+    for (const auto& workout : workouts) {
+        float totalStrengthWeight = 0.0f;
+        int totalCardioTime = 0;
+
+        for (const auto& ex : workout.getExercises()) {
+            if (auto se = std::dynamic_pointer_cast<StrengthExercise>(ex)) {
+                for (const auto& set : se->getSets()) {
+                    totalStrengthWeight += set.reps * set.weight;
+
+                    float& currentMax = maxWeightPerExercise[se->getName()];
+                    if (set.weight > currentMax)
+                        currentMax = set.weight;
+
+
+                }
+            } else if (auto ce = std::dynamic_pointer_cast<CardioExercise>(ex)) {
+                totalCardioTime += ce->getDuration();
+            }
+        }
+
+        std::cout << "\nДата: " << workout.getDate() << "\n";
+        std::cout << "  🔸 Общий поднятый вес: " << totalStrengthWeight << " кг\n";
+        std::cout << "  🔸 Общее время кардио: " << totalCardioTime << " минут\n";
+    }
+
+    std::cout << "\n🏋️ Максимальный вес по каждому силовому упражнению:\n";
+    for (const auto& [name, maxW] : maxWeightPerExercise) {
+        std::cout << "  💪 " << name << " — " << maxW << " кг\n";
+    }
+
+}

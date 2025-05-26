@@ -103,6 +103,7 @@ void showMenu() {
     std::cout << "\n=== Меню ===\n";
     std::cout << "1. Начать тренировку\n";
     std::cout << "2. Показать все тренировки\n";
+    std::cout << "3. Показать статистику\n";
     std::cout << "0. Выход\n";
     std::cout << "Выбор: ";
 }
@@ -123,6 +124,9 @@ int main() {
                 break;
             case 2:
                 tracker.showAllWorkouts();
+                break;
+            case 3:
+                tracker.printStatistics();
                 break;
             case 0:
                 std::cout << "Выход из программы\n";
