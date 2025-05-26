@@ -1,20 +1,25 @@
 #include "Exercise.h"
 
-// ---- базовый и силовой ----
-Exercise::Exercise(const std::string& n, int s, int r)
-    : name(n), sets(s), reps(r) {}
+Exercise::Exercise(const std::string& n) : name(n) {}
 
-StrengthExercise::StrengthExercise(const std::string& n, int s, int r, float w)
-    : Exercise(n, s, r), weight(w) {}
+// --- Силовое ---
+StrengthExercise::StrengthExercise(const std::string& n)
+    : Exercise(n) {}
 
-void StrengthExercise::display() const {
-    std::cout << "Strength: " << name
-              << " | Sets: " << sets
-              << " | Reps: " << reps
-              << " | Weight: " << weight << " kg\n";
+void StrengthExercise::addSet(int reps, float weight) {
+    sets.emplace_back(reps, weight);
 }
 
-// ---- кардио ----
+void StrengthExercise::display() const {
+    std::cout << "Strength: " << name << "\n";
+    for (size_t i = 0; i < sets.size(); ++i) {
+        std::cout << "  Set " << i + 1
+                  << " | Reps: " << sets[i].reps
+                  << " | Weight: " << sets[i].weight << " kg\n";
+    }
+}
+
+// --- Кардио ---
 CardioExercise::CardioExercise(const std::string& n, int duration)
     : Exercise(n), durationMinutes(duration) {}
 

@@ -1,24 +1,31 @@
 #pragma once
 #include <string>
 #include <iostream>
+#include <vector>
+
+struct SetInfo {
+    int reps;
+    float weight;
+
+    SetInfo(int r, float w) : reps(r), weight(w) {}
+};
 
 class Exercise {
 protected:
     std::string name;
-    int sets;
-    int reps;
 
 public:
-    Exercise(const std::string& n, int s = 0, int r = 0); // sets и reps по умолчанию
+    Exercise(const std::string& n);
     virtual void display() const = 0;
     virtual ~Exercise() {}
 };
 
 class StrengthExercise : public Exercise {
-    float weight;
+    std::vector<SetInfo> sets;
 
 public:
-    StrengthExercise(const std::string& n, int s, int r, float w);
+    StrengthExercise(const std::string& n);
+    void addSet(int reps, float weight);
     void display() const override;
 };
 
