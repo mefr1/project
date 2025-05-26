@@ -1,5 +1,8 @@
-#include "WorkoutTracker.h"
+#include <fstream>
+#include <sstream>
 #include <iostream>
+#include <memory>
+#include "WorkoutTracker.h"
 
 void WorkoutTracker::addWorkout(const Workout& w) {
     workouts.push_back(w);
@@ -10,4 +13,127 @@ void WorkoutTracker::showAllWorkouts() const {
         w.showWorkout();
         std::cout << "------------------\n";
     }
+
+}
+
+
+void WorkoutTracker::saveToFile(const std::string& filename) const {
+    std::ofstream out(filename);
+    if (!out) {
+        std::cerr << "Error: could not open file for writing.\n";
+        return;
+    }
+
+    for (const auto& workout : workouts) {
+        out << "=== Date: " << workout.getDate() << " ===\n";
+
+        for (const auto& ex : workout.getExercises()) {
+            if (auto se = std::dynamic_pointer_cast<StrengthExercise>(ex)) {
+                out << "Strength Exercise: " << se->getName() << "\n";
+                const auto& sets = se->getSets();
+                for (size_t i = 0; i < sets.size(); ++i) {
+                    out << "  Set " << i + 1 << ": " << sets[i].reps
+                        << " reps, " << sets[i].weight << " kg\n";
+                }
+            } else if (auto ce = std::dynamic_pointer_cast<CardioExercise>(ex)) {
+                out << "Cardio Exercise: " << ce->getName()
+                    << " - " << ce->getDuration() << "\n";
+            }
+        }
+
+        out << "\n";
+    }
+
+    std::cout << "✅ Saved to file: " << filename << "\n";
+}
+
+
+void WorkoutTracker::loadFromFile(const std::string& filename) {
+    std::ifstream in(filename);
+    if (!in) {
+        std::cerr << "⚠ File not found: " << filename << ". Starting with empty list.\n";
+        return;
+    }
+
+    std::string line;
+    Workout* currentWorkout = nullptr;
+
+    while (std::getline(in, line)) {
+
+        if (line.rfind("=== Date: ", 0) == 0) {
+            std::string date = line.substr(10);
+            if (date.rfind(" ===") != std::string::npos)
+                date.erase(date.length() - 4);
+            workouts.emplace_back(date);
+            currentWorkout = &workouts.back();
+        }
+
+
+        else if (line.rfind("Strength Exercise: ", 0) == 0) {
+            std::string name = line.substr(19);
+            auto ex = std::make_shared<StrengthExercise>(name);
+
+
+            while (std::getline(in, line) && line.rfind("  Set", 0) == 0) {
+                try {
+                    size_t colonPos = line.find(':');
+                    size_t commaPos = line.find(',', colonPos);
+                    size_t kgPos = line.find("kg", commaPos);
+
+                    if (colonPos == std::string::npos || commaPos == std::string::npos || kgPos == std::string::npos)
+                        throw std::invalid_argument("invalid format");
+
+                    std::string repsStr = line.substr(colonPos + 2, commaPos - colonPos - 2);
+                    std::string weightStr = line.substr(commaPos + 2, kgPos - commaPos - 2);
+
+                    int reps = std::stoi(repsStr);
+                    float weight = std::stof(weightStr);
+
+                    ex->addSet(reps, weight);
+                } catch (const std::exception& e) {
+                    std::cerr << "⚠ Failed to parse strength set: " << line << " (" << e.what() << ")\n";
+                }
+            }
+
+            if (currentWorkout) currentWorkout->addExercise(ex);
+
+
+            if (!in.eof() && !line.empty()) {
+                in.seekg(-static_cast<int>(line.length()) - 1, std::ios_base::cur);
+            }
+        }
+
+
+        else if (line.rfind("Cardio Exercise: ", 0) == 0) {
+            size_t sep = line.find(" — ");
+            if (sep == std::string::npos)
+                sep = line.find(" - ");
+
+            if (sep != std::string::npos) {
+                std::string name = line.substr(17, sep - 17);
+                try {
+                    std::string durationStr = line.substr(sep + 3);
+                    int duration = std::stoi(durationStr);
+                    auto ex = std::make_shared<CardioExercise>(name, duration);
+                    if (currentWorkout) currentWorkout->addExercise(ex);
+                } catch (const std::exception& e) {
+                    std::cerr << "⚠ Failed to parse cardio duration: " << line << " (" << e.what() << ")\n";
+                }
+            } else {
+                std::cerr << "⚠ Failed to parse cardio exercise: " << line << "\n";
+            }
+        }
+
+
+        else if (line.empty()) {
+            continue;
+        }
+
+
+        else {
+            std::cerr << "⚠ Unknown line: " << line << "\n";
+        }
+    }
+
+    std::cout << "✅ Successfully loaded from file: " << filename << "\n";
 }

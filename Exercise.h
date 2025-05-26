@@ -27,6 +27,9 @@ public:
     StrengthExercise(const std::string& n);
     void addSet(int reps, float weight);
     void display() const override;
+
+    const std::vector<SetInfo>& getSets() const;
+    const std::string& getName() const;
 };
 
 class CardioExercise : public Exercise {
@@ -35,4 +38,7 @@ class CardioExercise : public Exercise {
 public:
     CardioExercise(const std::string& n, int duration);
     void display() const override;
+
+    int getDuration() const;
+    const std::string& getName() const;
 };

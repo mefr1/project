@@ -19,6 +19,14 @@ void StrengthExercise::display() const {
     }
 }
 
+const std::vector<SetInfo>& StrengthExercise::getSets() const {
+    return sets;
+}
+
+const std::string& StrengthExercise::getName() const {
+    return name;
+}
+
 // --- Кардио ---
 CardioExercise::CardioExercise(const std::string& n, int duration)
     : Exercise(n), durationMinutes(duration) {}
@@ -26,4 +34,11 @@ CardioExercise::CardioExercise(const std::string& n, int duration)
 void CardioExercise::display() const {
     std::cout << "Cardio: " << name
               << " | Duration: " << durationMinutes << " min\n";
+}
+int CardioExercise::getDuration() const {
+    return durationMinutes;
+}
+
+const std::string& CardioExercise::getName() const {
+    return name;
 }

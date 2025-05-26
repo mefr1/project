@@ -16,3 +16,6 @@ void Workout::showWorkout() const {
 std::string Workout::getDate() const {
     return date;
 }
+const std::vector<std::shared_ptr<Exercise>>& Workout::getExercises() const {
+    return exercises;
+}

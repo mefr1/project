@@ -1,13 +1,19 @@
 #include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
 #include <memory>
+#include <ctime>
 #include "WorkoutTracker.h"
+#include <limits>
+const std::string FILE_NAME = "workouts.txt";
 
-void showMenu() {
-    std::cout << "\n=== Workout Tracker Menu ===\n";
-    std::cout << "1. Добавить тренировку\n";
-    std::cout << "2. Показать все тренировки\n";
-    std::cout << "0. Выход\n";
-    std::cout << "Выбор: ";
+std::string getCurrentDate() {
+    std::time_t now = std::time(nullptr);
+    std::tm* localTime = std::localtime(&now);
+    char buffer[11];
+    std::strftime(buffer, sizeof(buffer), "%Y-%m-%d", localTime);
+    return std::string(buffer);
 }
 
 std::shared_ptr<Exercise> createExerciseFromInput() {
@@ -22,96 +28,107 @@ std::shared_ptr<Exercise> createExerciseFromInput() {
 
     if (type == 1) {
         auto ex = std::make_shared<StrengthExercise>(name);
+        std::cout << "Введите подходы (0 в любом поле — завершение):\n";
+while (true) {
+    float weight;
+    std::cout << "  Вес: ";
+    std::cin >> weight;
+    if (weight <= 0) {
 
-        std::cout << "\nВведите подходы. Введите 0 для повтора или веса, чтобы завершить.\n";
-        while (true) {
-            int reps;
-            float weight;
-            std::cout << "  Повторы: ";
-            std::cin >> reps;
-            std::cout << "  Вес (кг): ";
-            std::cin >> weight;
+        break;
+    }
 
-            if (reps <= 0 || weight <= 0) {
-                std::cout << "  Завершение ввода подходов...\n";
-                break;
-            }
+    int reps;
+    std::cout << "  Повторения: ";
+    std::cin >> reps;
+    if (reps <= 0) {
 
-            ex->addSet(reps, weight);
-        }
+        continue;
+    }
 
+    ex->addSet(reps, weight);
+}
+        std::cin.ignore();
         return ex;
-
     } else if (type == 2) {
         int duration;
         std::cout << "Длительность (мин): ";
         std::cin >> duration;
+        std::cin.ignore();
         return std::make_shared<CardioExercise>(name, duration);
-    } else {
-        std::cout << "Неверный тип. Пропуск...\n";
-        return nullptr;
     }
+
+    std::cout << "Неверный тип упражнения.\n";
+    return nullptr;
 }
 
-
-
 void addWorkoutSession(WorkoutTracker& tracker) {
-    std::cin.ignore();
-    std::string date;
-    std::cout << "=== Начало новой тренировки ===\n";
-    std::cout << "Введите дату тренировки (например, 2025-05-26): ";
-    std::getline(std::cin, date);
+    std::string date = getCurrentDate();
+    std::cout << "\n";
+    std::cout << "=== Начало тренировки на сегодня: " << date << " ===\n";
 
     Workout workout(date);
 
     while (true) {
-        std::cout << "\nДобавить упражнение или завершить тренировку:\n";
+        std::cout << "\nВыберите действие:\n";
         std::cout << "1. Добавить упражнение\n";
         std::cout << "0. Завершить тренировку\n";
-        std::cout << "Выбор: ";
+        std::cout << "Ваш выбор: ";
+
         int choice;
         std::cin >> choice;
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-        if (choice == 0) {
-            break;
-        } else if (choice == 1) {
+        if (choice == 0) break;
+
+        if (choice == 1) {
             auto ex = createExerciseFromInput();
             if (ex) {
                 workout.addExercise(ex);
                 std::cout << "Упражнение добавлено!\n";
             }
         } else {
-            std::cout << "Неверный выбор.\n";
-        }
-    }
-
-    tracker.addWorkout(workout);
-    std::cout << "Тренировка сохранена!\n";
-}
-
-
-int main() {
-    WorkoutTracker tracker;
-    int choice;
-
-    while (true) {
-        showMenu();
-        std::cin >> choice;
-
-        switch (choice) {
-        case 1:
-            addWorkoutSession(tracker);
-            break;
-        case 2:
-            tracker.showAllWorkouts();
-            break;
-        case 0:
-            std::cout << "До свидания!\n";
-            return 0;
-        default:
             std::cout << "Неверный ввод. Попробуйте снова.\n";
         }
     }
 
-    return 0;
+    tracker.addWorkout(workout);
+    tracker.saveToFile(FILE_NAME);
+    std::cout << "✅ Тренировка успешно сохранена.\n";
+}
+
+
+
+void showMenu() {
+    std::cout << "\n=== Меню ===\n";
+    std::cout << "1. Начать тренировку\n";
+    std::cout << "2. Показать все тренировки\n";
+    std::cout << "0. Выход\n";
+    std::cout << "Выбор: ";
+}
+
+int main() {
+    WorkoutTracker tracker;
+    tracker.loadFromFile(FILE_NAME);
+
+    while (true) {
+        showMenu();
+
+        int choice;
+        std::cin >> choice;
+
+        switch (choice) {
+            case 1:
+                addWorkoutSession(tracker);
+                break;
+            case 2:
+                tracker.showAllWorkouts();
+                break;
+            case 0:
+                std::cout << "Выход из программы\n";
+                return 0;
+            default:
+                std::cout << "Неверный вариант\n";
+        }
+    }
 }

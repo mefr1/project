@@ -13,4 +13,5 @@ public:
     void addExercise(std::shared_ptr<Exercise> ex);
     void showWorkout() const;
     std::string getDate() const;
+    const std::vector<std::shared_ptr<Exercise>>& getExercises() const;
 };
