@@ -1,0 +1,4 @@
+/home/frolov-m/Labs-2Sem/Project/build/CMakeFiles/workoutlib.dir
+/home/frolov-m/Labs-2Sem/Project/build/CMakeFiles/WorkoutTrackerConsole.dir
+/home/frolov-m/Labs-2Sem/Project/build/CMakeFiles/edit_cache.dir
+/home/frolov-m/Labs-2Sem/Project/build/CMakeFiles/rebuild_cache.dir
