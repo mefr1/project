@@ -11,4 +11,5 @@ public:
     void saveToFile(const std::string& filename) const;
     void loadFromFile(const std::string& filename);
     void printStatistics() const;
+    const std::vector<Workout>& getAllWorkouts() const;
 };

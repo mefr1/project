@@ -5,8 +5,36 @@
 #include <memory>
 #include <ctime>
 #include "WorkoutTracker.h"
-#include <limits>
+#include <sstream>
+#include <climits>
+
 const std::string FILE_NAME = "workouts.txt";
+
+int safeIntInput(const std::string& prompt, int minVal = INT_MIN, int maxVal = INT_MAX) {
+    int value;
+    while (true) {
+        std::cout << prompt;
+        std::string input;
+        std::getline(std::cin, input);
+        std::stringstream ss(input);
+        if (ss >> value && !(ss >> input) && value >= minVal && value <= maxVal)
+            return value;
+        std::cout << "❌ Неверный ввод. Повторите.\n";
+    }
+}
+
+float safeFloatInput(const std::string& prompt, float minVal = -1e9f, float maxVal = 1e9f) {
+    float value;
+    while (true) {
+        std::cout << prompt;
+        std::string input;
+        std::getline(std::cin, input);
+        std::stringstream ss(input);
+        if (ss >> value && !(ss >> input) && value >= minVal && value <= maxVal)
+            return value;
+        std::cout << "❌ Неверный ввод. Повторите.\n";
+    }
+}
 
 std::string getCurrentDate() {
     std::time_t now = std::time(nullptr);
@@ -17,10 +45,7 @@ std::string getCurrentDate() {
 }
 
 std::shared_ptr<Exercise> createExerciseFromInput() {
-    int type;
-    std::cout << "1 - Силовое\n2 - Кардио\n3 - С собственным весом\n";
-    std::cin >> type;
-    std::cin.ignore();
+    int type = safeIntInput("1 - Силовое\n2 - Кардио\n3 - С собственным весом\nВаш выбор: ", 1, 3);
 
     std::string name;
     std::cout << "Название упражнения: ";
@@ -29,67 +54,40 @@ std::shared_ptr<Exercise> createExerciseFromInput() {
     if (type == 1) {
         auto ex = std::make_shared<StrengthExercise>(name);
         std::cout << "Введите подходы (0 в любом поле — завершение):\n";
-while (true) {
-    float weight;
-    std::cout << "  Вес: ";
-    std::cin >> weight;
-    if (weight <= 0) {
+        while (true) {
+            float weight = safeFloatInput("  Вес: ", 0);
+            if (weight <= 0) break;
 
-        break;
-    }
-
-    int reps;
-    std::cout << "  Повторения: ";
-    std::cin >> reps;
-    if (reps <= 0) {
-
-        continue;
-    }
-
-    ex->addSet(reps, weight);
-}
-        std::cin.ignore();
+            int reps = safeIntInput("  Повторения: ", 1);
+            ex->addSet(reps, weight);
+        }
         return ex;
     } else if (type == 2) {
-        int duration;
-        std::cout << "Длительность (мин): ";
-        std::cin >> duration;
-        std::cin.ignore();
+        int duration = safeIntInput("Длительность (мин): ", 1);
         return std::make_shared<CardioExercise>(name, duration);
+    } else if (type == 3) {
+        auto ex = std::make_shared<BodyweightExercise>(name);
+        std::cout << "Введите подходы (0 — завершить):\n";
+        while (true) {
+            int reps = safeIntInput("  Повторы: ", 0);
+            if (reps <= 0) break;
+            ex->addSet(reps);
+        }
+        return ex;
     }
-    else if (type == 3) {
-    auto ex = std::make_shared<BodyweightExercise>(name);
-    std::cout << "Введите подходы (0 — завершить):\n";
-    while (true) {
-        int reps;
-        std::cout << "  Повторы: ";
-        std::cin >> reps;
-        if (reps <= 0) break;
-        ex->addSet(reps);
-    }
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    return ex;
-}
     std::cout << "Неверный тип упражнения.\n";
     return nullptr;
 }
 
 void addWorkoutSession(WorkoutTracker& tracker) {
     std::string date = getCurrentDate();
-    std::cout << "\n";
-    std::cout << "=== Начало тренировки на сегодня: " << date << " ===\n";
+    std::cout << "\n=== Начало тренировки на сегодня: " << date << " ===\n";
 
     Workout workout(date);
 
     while (true) {
-        std::cout << "\nВыберите действие:\n";
-        std::cout << "1. Добавить упражнение\n";
-        std::cout << "0. Завершить тренировку\n";
-        std::cout << "Ваш выбор: ";
-
-        int choice;
-        std::cin >> choice;
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cout << "\nВыберите действие:\n1. Добавить упражнение\n0. Завершить тренировку\n";
+        int choice = safeIntInput("Ваш выбор: ", 0, 1);
 
         if (choice == 0) break;
 
@@ -99,8 +97,6 @@ void addWorkoutSession(WorkoutTracker& tracker) {
                 workout.addExercise(ex);
                 std::cout << "Упражнение добавлено!\n";
             }
-        } else {
-            std::cout << "Неверный ввод. Попробуйте снова.\n";
         }
     }
 
@@ -109,15 +105,8 @@ void addWorkoutSession(WorkoutTracker& tracker) {
     std::cout << "✅ Тренировка успешно сохранена.\n";
 }
 
-
-
 void showMenu() {
-    std::cout << "\n=== Меню ===\n";
-    std::cout << "1. Начать тренировку\n";
-    std::cout << "2. Показать все тренировки\n";
-    std::cout << "3. Показать статистику\n";
-    std::cout << "0. Выход\n";
-    std::cout << "Выбор: ";
+    std::cout << "\n=== Меню ===\n1. Начать тренировку\n2. Показать все тренировки\n3. Показать статистику\n0. Выход\nВыбор: ";
 }
 
 int main() {
@@ -126,9 +115,7 @@ int main() {
 
     while (true) {
         showMenu();
-
-        int choice;
-        std::cin >> choice;
+        int choice = safeIntInput("", 0, 3);
 
         switch (choice) {
             case 1:
@@ -143,8 +130,6 @@ int main() {
             case 0:
                 std::cout << "Выход из программы\n";
                 return 0;
-            default:
-                std::cout << "Неверный вариант\n";
         }
     }
 }

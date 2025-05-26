@@ -1,20 +1,14 @@
-=== Date: 2025-05-26 ===
-Strength Exercise: Bench press
-  Set 1: 12 reps, 100 kg
-Cardio Exercise: Cycling - 30
-
-=== Date: 2025-05-26 ===
-Strength Exercise: Squats
-  Set 1: 12 reps, 23 kg
-Cardio Exercise: Бег - 10
-
-=== Date: 2025-05-26 ===
-Strength Exercise: Bench press
-  Set 1: 12 reps, 200 kg
-Cardio Exercise: Cycling - 30
+=== Date: 2025-05-27 ===
+Strength Exercise: Жим лёжа
+  Set 1: 10 reps, 100 kg
+  Set 2: 5 reps, 110 kg
+  Set 3: 3 reps, 120 kg
+Bodyweight Exercise: Подтягивания
+  Set 1: 13 reps
+  Set 2: 12 reps
+  Set 3: 10 reps
+Cardio Exercise: Бег - 40
 
 === Date: 2025-05-27 ===
-Bodyweight Exercise: Подтягивания
-  Set 1: 12 reps
-  Set 2: 23 reps
-
+Strength Exercise: Жим лёжа
+  Set 1: 21 reps, 120 kg

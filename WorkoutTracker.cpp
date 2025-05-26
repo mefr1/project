@@ -10,6 +10,7 @@ void WorkoutTracker::addWorkout(const Workout& w) {
 
 void WorkoutTracker::showAllWorkouts() const {
     for (const auto& w : workouts) {
+        std::cout << "\n";
         w.showWorkout();
         std::cout << "------------------\n";
     }
@@ -64,8 +65,15 @@ void WorkoutTracker::loadFromFile(const std::string& filename) {
 
     std::string line;
     Workout* currentWorkout = nullptr;
+    std::string bufferedLine;
 
-    while (std::getline(in, line)) {
+    while (true) {
+        if (!bufferedLine.empty()) {
+            line = bufferedLine;
+            bufferedLine.clear();
+        } else if (!std::getline(in, line)) {
+            break;
+        }
 
         if (line.rfind("=== Date: ", 0) == 0) {
             std::string date = line.substr(10);
@@ -75,11 +83,9 @@ void WorkoutTracker::loadFromFile(const std::string& filename) {
             currentWorkout = &workouts.back();
         }
 
-
         else if (line.rfind("Strength Exercise: ", 0) == 0) {
             std::string name = line.substr(19);
             auto ex = std::make_shared<StrengthExercise>(name);
-
 
             while (std::getline(in, line) && line.rfind("  Set", 0) == 0) {
                 try {
@@ -102,14 +108,9 @@ void WorkoutTracker::loadFromFile(const std::string& filename) {
                 }
             }
 
-            if (currentWorkout) currentWorkout->addExercise(ex);
-
-
-            if (!in.eof() && !line.empty()) {
-                in.seekg(-static_cast<int>(line.length()) - 1, std::ios_base::cur);
-            }
+            if (currentWorkout && ex) currentWorkout->addExercise(ex);
+            if (!line.empty()) bufferedLine = line;
         }
-
 
         else if (line.rfind("Cardio Exercise: ", 0) == 0) {
             size_t sep = line.find(" — ");
@@ -122,7 +123,7 @@ void WorkoutTracker::loadFromFile(const std::string& filename) {
                     std::string durationStr = line.substr(sep + 3);
                     int duration = std::stoi(durationStr);
                     auto ex = std::make_shared<CardioExercise>(name, duration);
-                    if (currentWorkout) currentWorkout->addExercise(ex);
+                    if (currentWorkout && ex) currentWorkout->addExercise(ex);
                 } catch (const std::exception& e) {
                     std::cerr << "⚠ Failed to parse cardio duration: " << line << " (" << e.what() << ")\n";
                 }
@@ -132,31 +133,28 @@ void WorkoutTracker::loadFromFile(const std::string& filename) {
         }
 
         else if (line.rfind("Bodyweight Exercise: ", 0) == 0) {
-    std::string name = line.substr(21); // всё после заголовка
-    auto ex = std::make_shared<BodyweightExercise>(name);
+            std::string name = line.substr(21);
+            auto ex = std::make_shared<BodyweightExercise>(name);
 
-    while (std::getline(in, line) && line.rfind("  Set", 0) == 0) {
-        try {
-            size_t colonPos = line.find(':');
-            size_t repsPos = line.find(" reps", colonPos);
-            std::string repsStr = line.substr(colonPos + 2, repsPos - colonPos - 2);
-            int reps = std::stoi(repsStr);
-            ex->addSet(reps);
-        } catch (...) {
-            std::cerr << "⚠ Ошибка при разборе подхода с собственным весом: " << line << "\n";
+            while (std::getline(in, line) && line.rfind("  Set", 0) == 0) {
+                try {
+                    size_t colonPos = line.find(':');
+                    size_t repsPos = line.find(" reps", colonPos);
+                    std::string repsStr = line.substr(colonPos + 2, repsPos - colonPos - 2);
+                    int reps = std::stoi(repsStr);
+                    ex->addSet(reps);
+                } catch (...) {
+                    std::cerr << "⚠ Ошибка при разборе подхода с собственным весом: " << line << "\n";
+                }
+            }
+
+            if (currentWorkout && ex) currentWorkout->addExercise(ex);
+            if (!line.empty()) bufferedLine = line;
         }
-    }
 
-    if (currentWorkout) currentWorkout->addExercise(ex);
-
-    if (!in.eof() && !line.empty()) {
-        in.seekg(-static_cast<int>(line.length()) - 1, std::ios_base::cur);
-    }
-}
         else if (line.empty()) {
             continue;
         }
-
 
         else {
             std::cerr << "⚠ Unknown line: " << line << "\n";
@@ -217,4 +215,8 @@ for (const auto& [name, maxReps] : maxRepsPerBodyweightExercise) {
     std::cout << "  🧍 " << name << " — " << maxReps << " повторений\n";
 }
 
+}
+
+const std::vector<Workout>& WorkoutTracker::getAllWorkouts() const {
+    return workouts;
 }
