@@ -12,3 +12,9 @@ Cardio Exercise: Бег - 10
 Strength Exercise: Bench press
   Set 1: 12 reps, 200 kg
 Cardio Exercise: Cycling - 30
+
+=== Date: 2025-05-27 ===
+Bodyweight Exercise: Подтягивания
+  Set 1: 12 reps
+  Set 2: 23 reps
+

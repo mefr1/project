@@ -3,7 +3,7 @@
 #include <iostream>
 #include <memory>
 #include "WorkoutTracker.h"
-
+#include <map>
 void WorkoutTracker::addWorkout(const Workout& w) {
     workouts.push_back(w);
 }
@@ -39,6 +39,13 @@ void WorkoutTracker::saveToFile(const std::string& filename) const {
                 out << "Cardio Exercise: " << ce->getName()
                     << " - " << ce->getDuration() << "\n";
             }
+            else if (auto be = std::dynamic_pointer_cast<BodyweightExercise>(ex)) {
+    out << "Bodyweight Exercise: " << be->getName() << "\n";
+    const auto& sets = be->getSets();
+    for (size_t i = 0; i < sets.size(); ++i) {
+        out << "  Set " << i + 1 << ": " << sets[i] << " reps\n";
+    }
+}
         }
 
         out << "\n";
@@ -124,7 +131,28 @@ void WorkoutTracker::loadFromFile(const std::string& filename) {
             }
         }
 
+        else if (line.rfind("Bodyweight Exercise: ", 0) == 0) {
+    std::string name = line.substr(21); // всё после заголовка
+    auto ex = std::make_shared<BodyweightExercise>(name);
 
+    while (std::getline(in, line) && line.rfind("  Set", 0) == 0) {
+        try {
+            size_t colonPos = line.find(':');
+            size_t repsPos = line.find(" reps", colonPos);
+            std::string repsStr = line.substr(colonPos + 2, repsPos - colonPos - 2);
+            int reps = std::stoi(repsStr);
+            ex->addSet(reps);
+        } catch (...) {
+            std::cerr << "⚠ Ошибка при разборе подхода с собственным весом: " << line << "\n";
+        }
+    }
+
+    if (currentWorkout) currentWorkout->addExercise(ex);
+
+    if (!in.eof() && !line.empty()) {
+        in.seekg(-static_cast<int>(line.length()) - 1, std::ios_base::cur);
+    }
+}
         else if (line.empty()) {
             continue;
         }
@@ -137,10 +165,12 @@ void WorkoutTracker::loadFromFile(const std::string& filename) {
 
     std::cout << "✅ Successfully loaded from file: " << filename << "\n";
 }
-#include <map>
+
 
 void WorkoutTracker::printStatistics() const {
     std::map<std::string, float> maxWeightPerExercise;
+    std::map<std::string, int> maxRepsPerBodyweightExercise;
+
 
 
     std::cout << "\n=== Статистика по тренировкам ===\n";
@@ -163,6 +193,13 @@ void WorkoutTracker::printStatistics() const {
             } else if (auto ce = std::dynamic_pointer_cast<CardioExercise>(ex)) {
                 totalCardioTime += ce->getDuration();
             }
+           else if (auto be = std::dynamic_pointer_cast<BodyweightExercise>(ex)) {
+    for (int reps : be->getSets()) {
+        int& currentMax = maxRepsPerBodyweightExercise[be->getName()];
+        if (reps > currentMax)
+            currentMax = reps;
+    }
+}
         }
 
         std::cout << "\nДата: " << workout.getDate() << "\n";
@@ -170,9 +207,14 @@ void WorkoutTracker::printStatistics() const {
         std::cout << "  🔸 Общее время кардио: " << totalCardioTime << " минут\n";
     }
 
-    std::cout << "\n🏋️ Максимальный вес по каждому силовому упражнению:\n";
-    for (const auto& [name, maxW] : maxWeightPerExercise) {
-        std::cout << "  💪 " << name << " — " << maxW << " кг\n";
-    }
+    std::cout << "\n🏋️ Максимальный вес по силовым упражнениям:\n";
+for (const auto& [name, maxW] : maxWeightPerExercise) {
+    std::cout << "  💪 " << name << " — " << maxW << " кг\n";
+}
+
+std::cout << "\n🤸 Максимальные повторы по упражнениям с собственным весом:\n";
+for (const auto& [name, maxReps] : maxRepsPerBodyweightExercise) {
+    std::cout << "  🧍 " << name << " — " << maxReps << " повторений\n";
+}
 
 }

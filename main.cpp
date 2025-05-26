@@ -18,7 +18,7 @@ std::string getCurrentDate() {
 
 std::shared_ptr<Exercise> createExerciseFromInput() {
     int type;
-    std::cout << "Выберите тип упражнения (1 - силовое, 2 - кардио): ";
+    std::cout << "1 - Силовое\n2 - Кардио\n3 - С собственным весом\n";
     std::cin >> type;
     std::cin.ignore();
 
@@ -57,7 +57,19 @@ while (true) {
         std::cin.ignore();
         return std::make_shared<CardioExercise>(name, duration);
     }
-
+    else if (type == 3) {
+    auto ex = std::make_shared<BodyweightExercise>(name);
+    std::cout << "Введите подходы (0 — завершить):\n";
+    while (true) {
+        int reps;
+        std::cout << "  Повторы: ";
+        std::cin >> reps;
+        if (reps <= 0) break;
+        ex->addSet(reps);
+    }
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    return ex;
+}
     std::cout << "Неверный тип упражнения.\n";
     return nullptr;
 }
