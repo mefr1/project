@@ -63,70 +63,85 @@ CMAKE_BINARY_DIR = /home/frolov-m/Labs-2Sem/Project/build
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/workoutlib.dir/all
-all: CMakeFiles/WorkoutTrackerConsole.dir/all
+all: CMakeFiles/WorkoutTrackerGUI.dir/all
+all: imgui/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
-preinstall:
+preinstall: imgui/preinstall
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/workoutlib.dir/clean
-clean: CMakeFiles/WorkoutTrackerConsole.dir/clean
+clean: CMakeFiles/WorkoutTrackerGUI.dir/clean
+clean: imgui/clean
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/workoutlib.dir
+# Directory level rules for directory imgui
 
-# All Build rule for target.
-CMakeFiles/workoutlib.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/workoutlib.dir/build.make CMakeFiles/workoutlib.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/workoutlib.dir/build.make CMakeFiles/workoutlib.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/frolov-m/Labs-2Sem/Project/build/CMakeFiles --progress-num=3,4,5,6 "Built target workoutlib"
-.PHONY : CMakeFiles/workoutlib.dir/all
+# Recursive "all" directory target.
+imgui/all: imgui/CMakeFiles/imgui.dir/all
+.PHONY : imgui/all
 
-# Build rule for subdir invocation for target.
-CMakeFiles/workoutlib.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/frolov-m/Labs-2Sem/Project/build/CMakeFiles 4
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/workoutlib.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/frolov-m/Labs-2Sem/Project/build/CMakeFiles 0
-.PHONY : CMakeFiles/workoutlib.dir/rule
+# Recursive "preinstall" directory target.
+imgui/preinstall:
+.PHONY : imgui/preinstall
 
-# Convenience name for target.
-workoutlib: CMakeFiles/workoutlib.dir/rule
-.PHONY : workoutlib
-
-# clean rule for target.
-CMakeFiles/workoutlib.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/workoutlib.dir/build.make CMakeFiles/workoutlib.dir/clean
-.PHONY : CMakeFiles/workoutlib.dir/clean
+# Recursive "clean" directory target.
+imgui/clean: imgui/CMakeFiles/imgui.dir/clean
+.PHONY : imgui/clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/WorkoutTrackerConsole.dir
+# Target rules for target CMakeFiles/WorkoutTrackerGUI.dir
 
 # All Build rule for target.
-CMakeFiles/WorkoutTrackerConsole.dir/all: CMakeFiles/workoutlib.dir/all
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/WorkoutTrackerConsole.dir/build.make CMakeFiles/WorkoutTrackerConsole.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/WorkoutTrackerConsole.dir/build.make CMakeFiles/WorkoutTrackerConsole.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/frolov-m/Labs-2Sem/Project/build/CMakeFiles --progress-num=1,2 "Built target WorkoutTrackerConsole"
-.PHONY : CMakeFiles/WorkoutTrackerConsole.dir/all
+CMakeFiles/WorkoutTrackerGUI.dir/all: imgui/CMakeFiles/imgui.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/WorkoutTrackerGUI.dir/build.make CMakeFiles/WorkoutTrackerGUI.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/WorkoutTrackerGUI.dir/build.make CMakeFiles/WorkoutTrackerGUI.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/frolov-m/Labs-2Sem/Project/build/CMakeFiles --progress-num=1,2,3,4,5 "Built target WorkoutTrackerGUI"
+.PHONY : CMakeFiles/WorkoutTrackerGUI.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/WorkoutTrackerConsole.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/frolov-m/Labs-2Sem/Project/build/CMakeFiles 6
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/WorkoutTrackerConsole.dir/all
+CMakeFiles/WorkoutTrackerGUI.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/frolov-m/Labs-2Sem/Project/build/CMakeFiles 13
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/WorkoutTrackerGUI.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/frolov-m/Labs-2Sem/Project/build/CMakeFiles 0
-.PHONY : CMakeFiles/WorkoutTrackerConsole.dir/rule
+.PHONY : CMakeFiles/WorkoutTrackerGUI.dir/rule
 
 # Convenience name for target.
-WorkoutTrackerConsole: CMakeFiles/WorkoutTrackerConsole.dir/rule
-.PHONY : WorkoutTrackerConsole
+WorkoutTrackerGUI: CMakeFiles/WorkoutTrackerGUI.dir/rule
+.PHONY : WorkoutTrackerGUI
 
 # clean rule for target.
-CMakeFiles/WorkoutTrackerConsole.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/WorkoutTrackerConsole.dir/build.make CMakeFiles/WorkoutTrackerConsole.dir/clean
-.PHONY : CMakeFiles/WorkoutTrackerConsole.dir/clean
+CMakeFiles/WorkoutTrackerGUI.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/WorkoutTrackerGUI.dir/build.make CMakeFiles/WorkoutTrackerGUI.dir/clean
+.PHONY : CMakeFiles/WorkoutTrackerGUI.dir/clean
+
+#=============================================================================
+# Target rules for target imgui/CMakeFiles/imgui.dir
+
+# All Build rule for target.
+imgui/CMakeFiles/imgui.dir/all:
+	$(MAKE) $(MAKESILENT) -f imgui/CMakeFiles/imgui.dir/build.make imgui/CMakeFiles/imgui.dir/depend
+	$(MAKE) $(MAKESILENT) -f imgui/CMakeFiles/imgui.dir/build.make imgui/CMakeFiles/imgui.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/frolov-m/Labs-2Sem/Project/build/CMakeFiles --progress-num=6,7,8,9,10,11,12,13 "Built target imgui"
+.PHONY : imgui/CMakeFiles/imgui.dir/all
+
+# Build rule for subdir invocation for target.
+imgui/CMakeFiles/imgui.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/frolov-m/Labs-2Sem/Project/build/CMakeFiles 8
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 imgui/CMakeFiles/imgui.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/frolov-m/Labs-2Sem/Project/build/CMakeFiles 0
+.PHONY : imgui/CMakeFiles/imgui.dir/rule
+
+# Convenience name for target.
+imgui: imgui/CMakeFiles/imgui.dir/rule
+.PHONY : imgui
+
+# clean rule for target.
+imgui/CMakeFiles/imgui.dir/clean:
+	$(MAKE) $(MAKESILENT) -f imgui/CMakeFiles/imgui.dir/build.make imgui/CMakeFiles/imgui.dir/clean
+.PHONY : imgui/CMakeFiles/imgui.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

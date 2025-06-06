@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/WorkoutTrackerConsole.dir/main.cpp.o -o WorkoutTrackerConsole  libworkoutlib.a 

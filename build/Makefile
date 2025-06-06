@@ -117,37 +117,37 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named workoutlib
+# Target rules for targets named WorkoutTrackerGUI
 
 # Build rule for target.
-workoutlib: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 workoutlib
-.PHONY : workoutlib
+WorkoutTrackerGUI: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 WorkoutTrackerGUI
+.PHONY : WorkoutTrackerGUI
 
 # fast build rule for target.
-workoutlib/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/workoutlib.dir/build.make CMakeFiles/workoutlib.dir/build
-.PHONY : workoutlib/fast
+WorkoutTrackerGUI/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/WorkoutTrackerGUI.dir/build.make CMakeFiles/WorkoutTrackerGUI.dir/build
+.PHONY : WorkoutTrackerGUI/fast
 
 #=============================================================================
-# Target rules for targets named WorkoutTrackerConsole
+# Target rules for targets named imgui
 
 # Build rule for target.
-WorkoutTrackerConsole: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 WorkoutTrackerConsole
-.PHONY : WorkoutTrackerConsole
+imgui: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 imgui
+.PHONY : imgui
 
 # fast build rule for target.
-WorkoutTrackerConsole/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/WorkoutTrackerConsole.dir/build.make CMakeFiles/WorkoutTrackerConsole.dir/build
-.PHONY : WorkoutTrackerConsole/fast
+imgui/fast:
+	$(MAKE) $(MAKESILENT) -f imgui/CMakeFiles/imgui.dir/build.make imgui/CMakeFiles/imgui.dir/build
+.PHONY : imgui/fast
 
 Exercise.o: Exercise.cpp.o
 .PHONY : Exercise.o
 
 # target to build an object file
 Exercise.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/workoutlib.dir/build.make CMakeFiles/workoutlib.dir/Exercise.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/WorkoutTrackerGUI.dir/build.make CMakeFiles/WorkoutTrackerGUI.dir/Exercise.cpp.o
 .PHONY : Exercise.cpp.o
 
 Exercise.i: Exercise.cpp.i
@@ -155,7 +155,7 @@ Exercise.i: Exercise.cpp.i
 
 # target to preprocess a source file
 Exercise.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/workoutlib.dir/build.make CMakeFiles/workoutlib.dir/Exercise.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/WorkoutTrackerGUI.dir/build.make CMakeFiles/WorkoutTrackerGUI.dir/Exercise.cpp.i
 .PHONY : Exercise.cpp.i
 
 Exercise.s: Exercise.cpp.s
@@ -163,7 +163,7 @@ Exercise.s: Exercise.cpp.s
 
 # target to generate assembly for a file
 Exercise.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/workoutlib.dir/build.make CMakeFiles/workoutlib.dir/Exercise.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/WorkoutTrackerGUI.dir/build.make CMakeFiles/WorkoutTrackerGUI.dir/Exercise.cpp.s
 .PHONY : Exercise.cpp.s
 
 Workout.o: Workout.cpp.o
@@ -171,7 +171,7 @@ Workout.o: Workout.cpp.o
 
 # target to build an object file
 Workout.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/workoutlib.dir/build.make CMakeFiles/workoutlib.dir/Workout.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/WorkoutTrackerGUI.dir/build.make CMakeFiles/WorkoutTrackerGUI.dir/Workout.cpp.o
 .PHONY : Workout.cpp.o
 
 Workout.i: Workout.cpp.i
@@ -179,7 +179,7 @@ Workout.i: Workout.cpp.i
 
 # target to preprocess a source file
 Workout.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/workoutlib.dir/build.make CMakeFiles/workoutlib.dir/Workout.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/WorkoutTrackerGUI.dir/build.make CMakeFiles/WorkoutTrackerGUI.dir/Workout.cpp.i
 .PHONY : Workout.cpp.i
 
 Workout.s: Workout.cpp.s
@@ -187,7 +187,7 @@ Workout.s: Workout.cpp.s
 
 # target to generate assembly for a file
 Workout.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/workoutlib.dir/build.make CMakeFiles/workoutlib.dir/Workout.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/WorkoutTrackerGUI.dir/build.make CMakeFiles/WorkoutTrackerGUI.dir/Workout.cpp.s
 .PHONY : Workout.cpp.s
 
 WorkoutTracker.o: WorkoutTracker.cpp.o
@@ -195,7 +195,7 @@ WorkoutTracker.o: WorkoutTracker.cpp.o
 
 # target to build an object file
 WorkoutTracker.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/workoutlib.dir/build.make CMakeFiles/workoutlib.dir/WorkoutTracker.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/WorkoutTrackerGUI.dir/build.make CMakeFiles/WorkoutTrackerGUI.dir/WorkoutTracker.cpp.o
 .PHONY : WorkoutTracker.cpp.o
 
 WorkoutTracker.i: WorkoutTracker.cpp.i
@@ -203,7 +203,7 @@ WorkoutTracker.i: WorkoutTracker.cpp.i
 
 # target to preprocess a source file
 WorkoutTracker.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/workoutlib.dir/build.make CMakeFiles/workoutlib.dir/WorkoutTracker.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/WorkoutTrackerGUI.dir/build.make CMakeFiles/WorkoutTrackerGUI.dir/WorkoutTracker.cpp.i
 .PHONY : WorkoutTracker.cpp.i
 
 WorkoutTracker.s: WorkoutTracker.cpp.s
@@ -211,32 +211,32 @@ WorkoutTracker.s: WorkoutTracker.cpp.s
 
 # target to generate assembly for a file
 WorkoutTracker.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/workoutlib.dir/build.make CMakeFiles/workoutlib.dir/WorkoutTracker.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/WorkoutTrackerGUI.dir/build.make CMakeFiles/WorkoutTrackerGUI.dir/WorkoutTracker.cpp.s
 .PHONY : WorkoutTracker.cpp.s
 
-main.o: main.cpp.o
-.PHONY : main.o
+main_gui.o: main_gui.cpp.o
+.PHONY : main_gui.o
 
 # target to build an object file
-main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/WorkoutTrackerConsole.dir/build.make CMakeFiles/WorkoutTrackerConsole.dir/main.cpp.o
-.PHONY : main.cpp.o
+main_gui.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/WorkoutTrackerGUI.dir/build.make CMakeFiles/WorkoutTrackerGUI.dir/main_gui.cpp.o
+.PHONY : main_gui.cpp.o
 
-main.i: main.cpp.i
-.PHONY : main.i
+main_gui.i: main_gui.cpp.i
+.PHONY : main_gui.i
 
 # target to preprocess a source file
-main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/WorkoutTrackerConsole.dir/build.make CMakeFiles/WorkoutTrackerConsole.dir/main.cpp.i
-.PHONY : main.cpp.i
+main_gui.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/WorkoutTrackerGUI.dir/build.make CMakeFiles/WorkoutTrackerGUI.dir/main_gui.cpp.i
+.PHONY : main_gui.cpp.i
 
-main.s: main.cpp.s
-.PHONY : main.s
+main_gui.s: main_gui.cpp.s
+.PHONY : main_gui.s
 
 # target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/WorkoutTrackerConsole.dir/build.make CMakeFiles/WorkoutTrackerConsole.dir/main.cpp.s
-.PHONY : main.cpp.s
+main_gui.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/WorkoutTrackerGUI.dir/build.make CMakeFiles/WorkoutTrackerGUI.dir/main_gui.cpp.s
+.PHONY : main_gui.cpp.s
 
 # Help Target
 help:
@@ -246,8 +246,8 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... WorkoutTrackerConsole"
-	@echo "... workoutlib"
+	@echo "... WorkoutTrackerGUI"
+	@echo "... imgui"
 	@echo "... Exercise.o"
 	@echo "... Exercise.i"
 	@echo "... Exercise.s"
@@ -257,9 +257,9 @@ help:
 	@echo "... WorkoutTracker.o"
 	@echo "... WorkoutTracker.i"
 	@echo "... WorkoutTracker.s"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
+	@echo "... main_gui.o"
+	@echo "... main_gui.i"
+	@echo "... main_gui.s"
 .PHONY : help
 
 

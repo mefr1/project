@@ -1,14 +1,32 @@
-=== Date: 2025-05-27 ===
+=== Date: 2025-06-06 ===
 Strength Exercise: Жим лёжа
-  Set 1: 10 reps, 100 kg
-  Set 2: 5 reps, 110 kg
-  Set 3: 3 reps, 120 kg
+  Set 1: 12 reps, 60 kg
+  Set 2: 8 reps, 100 kg
+  Set 3: 8 reps, 100 kg
+  Set 4: 6 reps, 100 kg
+  Set 5: 6 reps, 95 kg
+Strength Exercise: Присед
+  Set 1: 12 reps, 130 kg
+  Set 2: 12 reps, 120 kg
+  Set 3: 12 reps, 110 kg
+Cardio Exercise: Бег - 40
 Bodyweight Exercise: Подтягивания
-  Set 1: 13 reps
+  Set 1: 14 reps
   Set 2: 12 reps
   Set 3: 10 reps
-Cardio Exercise: Бег - 40
+Bodyweight Exercise: Отжимания
+  Set 1: 40 reps
+  Set 2: 35 reps
+  Set 3: 30 reps
 
-=== Date: 2025-05-27 ===
+=== Date: 2025-06-06 ===
 Strength Exercise: Жим лёжа
-  Set 1: 21 reps, 120 kg
+  Set 1: 2 reps, 120 kg
+  Set 2: 1 reps, 120 kg
+  Set 3: 6 reps, 100 kg
+  Set 4: 5 reps, 100 kg
+Bodyweight Exercise: Подтягивания
+  Set 1: 20 reps
+  Set 2: 18 reps
+  Set 3: 14 reps
+

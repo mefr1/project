@@ -18,7 +18,6 @@ public:
     const std::string& getName() const { return name; }
 };
 
-// --- СИЛОВОЕ УПРАЖНЕНИЕ ---
 
 struct StrengthSet {
     int reps;
@@ -38,7 +37,6 @@ public:
     const std::vector<StrengthSet>& getSets() const;
 };
 
-// --- КАРДИО ---
 
 class CardioExercise : public Exercise {
 private:
@@ -52,7 +50,6 @@ public:
     int getDuration() const;
 };
 
-// --- СОБСТВЕННЫЙ ВЕС ---
 
 class BodyweightExercise : public Exercise {
 private:

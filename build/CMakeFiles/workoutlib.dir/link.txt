@@ -1,2 +1,0 @@
-/usr/bin/ar qc libworkoutlib.a CMakeFiles/workoutlib.dir/Exercise.cpp.o CMakeFiles/workoutlib.dir/Workout.cpp.o CMakeFiles/workoutlib.dir/WorkoutTracker.cpp.o
-/usr/bin/ranlib libworkoutlib.a
